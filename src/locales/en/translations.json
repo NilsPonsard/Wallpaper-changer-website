@@ -1,0 +1,31 @@
+{
+  "signUp": {
+    "title": "Sign Up",
+    "passwordMismatch": "Passwords do not match",
+    "passwordEmpty": "Password cannot be empty",
+    "emailEmpty": "Email cannot be empty",
+    "usernameEmpty": "Username cannot be empty",
+    "errorInFields": "Error in fields",
+    "mustAcceptTOS": "You must accept the Terms of Service",
+    "userAlreadyExists": "User already exists",
+    "agreeTOS": "I agree to the",
+    "termsOfService":"Terms of service",    "signUp": "Sign Up",
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "user": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "signIn": {
+    "signIn": "Sign In",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "title": "Sign In",
+    "invalidCredentials": "Invalid credentials",
+    "dontHaveAccount": "Don't have an account?"
+
+  },
+  "unexpectedError": "Unexpected error"
+}
