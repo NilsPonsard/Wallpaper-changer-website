@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { useRouter } from 'next/router';
-import { getUserEmails, User, UserEmail } from './api/user';
+import { User } from './api/user';
 import {
   Credentials,
   RefreshUser,
@@ -36,7 +36,6 @@ interface LoginContextInterface {
   credentialsManager: CredentialsManager;
   refreshUser: RefreshUser;
   validUser: boolean | undefined;
-  emails: UserEmail[] | null | undefined;
 }
 
 /**
@@ -72,9 +71,6 @@ export function useCreateLoginContext(): LoginContextInterface {
   const [credentials, internalSetCredentials] = useState<
     Credentials | undefined
   >(undefined);
-  const [emails, setEmails] = useState<UserEmail[] | null | undefined>(
-    undefined
-  );
 
   // Read the local storage at start
   useEffect(() => {
@@ -99,7 +95,7 @@ export function useCreateLoginContext(): LoginContextInterface {
 
   const refreshUser = useCallback(() => {
     if (credentialsManager.credentials) {
-      fetchApiWithAuth<{}, User>('/user/@me', credentialsManager)
+      fetchApiWithAuth<User>('/user/me', credentialsManager)
         .then(({ data, status }) => {
           if (status === 200) setUser(data);
           else setUser(null);
@@ -115,37 +111,14 @@ export function useCreateLoginContext(): LoginContextInterface {
     refreshUser();
   }, [credentialsManager, refreshUser]);
 
-  const refreshEmail = useCallback(() => {
-    if (credentialsManager.credentials && user) {
-      getUserEmails(credentialsManager, user.id)
-        .then((data) => {
-          setEmails(data);
-        })
-        .catch(() => {
-          setEmails(null);
-        });
-    }
-  }, [credentialsManager, user]);
-
-  useEffect(() => {
-    refreshEmail();
-  }, [user, refreshEmail]);
-
-  const validUser = useMemo(() => {
-    if (user === undefined || emails === undefined) return undefined;
-    if (user === null || emails === null) return false;
-    return emails[0].isVerified;
-  }, [emails, user]);
-
   const value = useMemo(
     () => ({
       user,
       credentialsManager,
       refreshUser,
-      validUser,
-      emails,
+      validUser: user !== null && user !== undefined,
     }),
-    [user, credentialsManager, refreshUser, validUser, emails]
+    [user, credentialsManager, refreshUser]
   );
 
   return value;
@@ -158,7 +131,6 @@ export const LoginContext = createContext<LoginContextInterface>({
   user: undefined,
   credentialsManager: { credentials: undefined, setCredentials: () => {} },
   refreshUser: () => {},
-  emails: [],
   validUser: undefined,
 });
 

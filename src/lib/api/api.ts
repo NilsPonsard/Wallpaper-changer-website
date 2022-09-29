@@ -33,14 +33,14 @@ let apiServer =
     ? 'https://api.wall.nponsard.net'
     : 'http://localhost:3000');
 
-const prefix = '/api/v1';
+const prefix = '';
 
 export const setApiServer = (newApiServer: string) => {
   apiServer = newApiServer;
 };
 
 // Fetch the backend api
-export async function fetchApi<DataType>(
+export async function fetchApi<DataType = {}>(
   ressource: string,
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' = 'GET',
   body?: any,
@@ -74,7 +74,7 @@ export async function fetchApi<DataType>(
 
   const json = await response.json();
   return {
-    data: json.data,
+    data: json,
     status: response.status,
   };
 }
@@ -82,12 +82,15 @@ export async function fetchApi<DataType>(
 export async function refreshTokens(
   credentialsManager: CredentialsManager
 ): Promise<boolean> {
-  const { data, status } = await fetchApi<Credentials>('/auth/token', 'POST', {
-    grantType: 'refresh_token',
-    refreshToken: credentialsManager.credentials?.refreshToken,
-  });
+  const { data, status } = await fetchApi<Credentials>(
+    '/user/refresh',
+    'POST',
+    {
+      refresh: credentialsManager.credentials?.refreshToken,
+    }
+  );
 
-  if (status === 201) {
+  if (status === 200) {
     credentialsManager.setCredentials(data);
     return true;
   }
@@ -96,7 +99,7 @@ export async function refreshTokens(
 }
 
 // Fetch the backend api with automatic refresh
-export async function fetchApiWithAuth<DataType>(
+export async function fetchApiWithAuth<DataType = {}>(
   ressource: string,
   credentialsManager: CredentialsManager,
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' = 'GET',
@@ -127,17 +130,16 @@ export async function fetchApiWithAuth<DataType>(
 }
 
 export async function login(
-  email: string,
+  username: string,
   password: string,
   credentialsManager: CredentialsManager
 ): Promise<boolean> {
-  const { data, status } = await fetchApi<Credentials>('/auth/token', 'POST', {
-    grantType: 'implicit',
-    identity: email,
-    secret: password,
+  const { data, status } = await fetchApi<Credentials>('/user/login', 'POST', {
+    username,
+    password,
   });
 
-  if (status === 201) {
+  if (status === 200) {
     credentialsManager.setCredentials(data);
     return true;
   }

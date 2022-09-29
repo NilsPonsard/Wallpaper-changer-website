@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import Head from 'next/head';
 import App, { AppContext, AppProps } from 'next/app';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import Link from 'next/link';
 import createEmotionCache from '../lib/emotionCache';
 import { TranslationProvider } from '../lib/translations';
 import { ThemeManagerProvider } from '../lib/themeManager';
@@ -45,12 +46,17 @@ export default function MyApp(props: MyAppProps) {
       <TranslationProvider>
         <ThemeManagerProvider>
           <LoginContextProvider>
-            <Box className={styles.container} sx={{
-              backgroundColor: 'background.default',
-              color: 'text.primary',
-            }}>
+            <Box
+              className={styles.container}
+              sx={{
+                backgroundColor: 'background.default',
+                color: 'text.primary',
+              }}
+            >
               <Box className={styles.nav}>
-                <div>nav</div>
+                <Link href="/" passHref>
+                  <Button variant="contained">Home</Button>
+                </Link>
               </Box>
               <Component {...pageProps} />
             </Box>

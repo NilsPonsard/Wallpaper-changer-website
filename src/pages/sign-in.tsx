@@ -18,7 +18,7 @@ import { useLoginContext } from '../lib/loginContext';
 import { login, InvalidCredentialsError } from '../lib/api/api';
 
 interface EditorState {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -33,7 +33,7 @@ export default function SignIn() {
   const { i18n } = useTranslation();
   const router = useRouter();
   const [editorState, setEditorState] = useState<EditorState>({
-    email: '',
+    username: '',
     password: '',
   });
   const [editorErrors, setEditorErrors] = useState<EditorErrors>({
@@ -47,21 +47,15 @@ export default function SignIn() {
 
   // --- check ---
 
-  const checkEmail = () => {
-    if (!editorState.email) {
+  const checkUsername = () => {
+    if (!editorState.username) {
       setEditorErrors({
         ...editorErrors,
         email: i18n.t('signIn.emailRequired'),
       });
       return false;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editorState.email)) {
-      setEditorErrors({
-        ...editorErrors,
-        email: i18n.t('signIn.emailInvalid'),
-      });
-      return false;
-    }
+
     return true;
   };
 
@@ -78,10 +72,10 @@ export default function SignIn() {
 
   // --- handlers ---
 
-  const handleEmailChange = (
+  const handleUsernameChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setEditorState({ ...editorState, email: event.target.value });
+    setEditorState({ ...editorState, username: event.target.value });
   };
 
   const handlePasswordChange = (
@@ -95,10 +89,10 @@ export default function SignIn() {
   ) => {
     evt.preventDefault();
 
-    if (checkEmail() && checkPassword()) {
+    if (checkUsername() && checkPassword()) {
       setEditorErrors({ email: '', password: '' });
       setLoading(true);
-      login(editorState.email, editorState.password, credentialsManager)
+      login(editorState.username, editorState.password, credentialsManager)
         .then(() => {
           // redirect to the last page
           router.back();
@@ -138,9 +132,9 @@ export default function SignIn() {
 
           <Stack spacing={2}>
             <TextField
-              type="email"
-              onChange={handleEmailChange}
-              label={i18n.t('user.email')}
+              type="text"
+              onChange={handleUsernameChange}
+              label={i18n.t('user.username')}
               variant="standard"
               error={editorErrors.email !== ''}
               helperText={editorErrors.email}

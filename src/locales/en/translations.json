@@ -9,8 +9,10 @@
     "mustAcceptTOS": "You must accept the Terms of Service",
     "userAlreadyExists": "User already exists",
     "agreeTOS": "I agree to the",
-    "termsOfService":"Terms of service",    "signUp": "Sign Up",
-    "alreadyHaveAccount": "Already have an account?"
+    "termsOfService": "Terms of service",
+    "signUp": "Sign Up",
+    "alreadyHaveAccount": "Already have an account?",
+    "bio": "Bio"
   },
   "user": {
     "username": "Username",
@@ -25,7 +27,6 @@
     "title": "Sign In",
     "invalidCredentials": "Invalid credentials",
     "dontHaveAccount": "Don't have an account?"
-
   },
   "unexpectedError": "Unexpected error"
 }
