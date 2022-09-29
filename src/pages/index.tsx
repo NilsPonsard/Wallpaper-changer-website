@@ -1,37 +1,15 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
-import { postWallpaper } from '../lib/api/wallpaper';
+import Friends from '../components/Friends';
 
 import { useLoginContext } from '../lib/loginContext';
 import { useTranslation } from '../lib/translations';
 
 export default function Index() {
-  const { user, credentialsManager } = useLoginContext();
+  const { user } = useLoginContext();
   const { i18n } = useTranslation();
-
-  const [formState, setFormState] = React.useState({
-    targetUserId: '',
-    wallpaperUrl: '',
-  });
-
-  function updateFormState(
-    target: string,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setFormState({
-      ...formState,
-      [target]: event.target.value,
-    });
-  }
-
-  const setWallpaper = () => {
-    postWallpaper(credentialsManager, {
-      users: [formState.targetUserId],
-      url: formState.wallpaperUrl,
-    });
-  };
 
   // else show the landing page
 
@@ -42,19 +20,9 @@ export default function Index() {
       </Head>
       {user ? (
         <Box>
-          <Typography> user id : {user?.id}</Typography>
-          <Typography> set wallpaper</Typography>
-          <TextField
-            label="target user id"
-            onChange={(e) => updateFormState('targetUserId', e)}
-          />
-          <TextField
-            label="wallpaper url"
-            onChange={(e) => updateFormState('wallpaperUrl', e)}
-          />
-          <Button variant="contained" color="primary" onClick={setWallpaper}>
-            set wallpaper
-          </Button>
+          <Typography> username : {user?.username}</Typography>
+          <Typography> bio : {user?.description}</Typography>
+          <Friends />
         </Box>
       ) : (
         <Box>

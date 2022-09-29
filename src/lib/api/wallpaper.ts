@@ -2,7 +2,8 @@ import { CredentialsManager, fetchApiWithAuth } from './api';
 
 export interface Wallpaper {
   url: string;
-  users: string[];
+  targets: string[];
+  title: string;
 }
 
 export async function postWallpaper(

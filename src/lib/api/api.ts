@@ -50,14 +50,20 @@ export async function fetchApi<DataType = {}>(
   status: number;
 }> {
   const formatedBody = body ? JSON.stringify(body) : undefined;
+
+  let requestHeaders = headers;
+
+  if (body)
+    requestHeaders = new Headers({
+      'Content-Type': 'application/json',
+      ...headers,
+    });
+
   const response = await Promise.race([
     fetch(apiServer + prefix + ressource, {
       method,
       body: formatedBody,
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json',
-      },
+      headers: requestHeaders,
     }),
     new Promise((_, reject) => {
       setTimeout(() => reject(new Error('Request timeout')), fetchTimeout);
