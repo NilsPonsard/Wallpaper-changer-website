@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, TextField, Typography, Box, Stack } from '@mui/material';
 import useSWR from 'swr';
-import { Box, Stack } from '@mui/system';
 import { useLoginContext } from '../lib/loginContext';
 import { getFriends, sendFriendRequest } from '../lib/api/user';
 import UserCard from './UserCard';

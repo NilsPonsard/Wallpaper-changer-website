@@ -2,7 +2,7 @@ import { CredentialsManager, fetchApiWithAuth } from './api';
 
 export interface Wallpaper {
   url: string;
-  targets: string[];
+  target: number[];
   title: string;
 }
 

@@ -11,7 +11,7 @@ export const UserAlreadyExists = new Error('User already exists');
 // Response structures (models)
 
 export interface User {
-  id: string;
+  id: number;
   username: string;
   description?: string;
   email?: string;

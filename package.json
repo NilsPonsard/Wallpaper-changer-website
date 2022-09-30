@@ -19,7 +19,6 @@
     "@mui/icons-material": "^5.8.3",
     "@mui/lab": "^5.0.0-alpha.85",
     "@mui/material": "^5.8.3",
-    "@mui/system": "^5.8.4",
     "i18n-js": "^3.9.2",
     "next": "12.1.6",
     "react": "18.1.0",
