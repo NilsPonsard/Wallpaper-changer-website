@@ -39,6 +39,7 @@ export default function SignIn() {
     username: '',
     confirmPassword: '',
     acceptTos: false,
+    description: '',
   });
 
   // store form errors related to each input here
@@ -82,7 +83,15 @@ export default function SignIn() {
   if (user) router.push('/');
 
   // --- Event handlers ---
-
+  const handleDescriptionChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    // TODO : email check
+    setFormState((previous) => ({
+      ...previous,
+      description: event.target.value,
+    }));
+  };
   // TODO : add checks
 
   const handleEmailChange = (
@@ -176,7 +185,7 @@ export default function SignIn() {
       email: formState.email,
       password: formState.password,
       username: formState.username,
-      bio: '',
+      description: formState.description,
     })
       .then(() => {
         // go to home
@@ -190,9 +199,7 @@ export default function SignIn() {
             <Typography>{i18n.t('signUp.userAlreadyExists')}</Typography>
           );
         } else {
-          console.error(
-            <Typography>{i18n.t('unexpectedError')}</Typography>
-          );
+          console.error(<Typography>{i18n.t('unexpectedError')}</Typography>);
         }
       })
       .finally(() => {
@@ -231,6 +238,14 @@ export default function SignIn() {
               variant="standard"
               error={formErrorsState.email.length > 0}
               helperText={formErrorsState.email}
+            />
+
+            <TextField
+              type="text"
+              onChange={handleDescriptionChange}
+              label={i18n.t('user.description')}
+              variant="standard"
+              value={formState.description}
             />
 
             <TextField

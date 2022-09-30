@@ -18,7 +18,8 @@
     "username": "Username",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Confirm Password"
+    "confirmPassword": "Confirm Password",
+    "description": "Description"
   },
   "signIn": {
     "signIn": "Sign In",
