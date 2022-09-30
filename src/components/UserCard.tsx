@@ -1,5 +1,4 @@
-import { Button, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Button, Typography, Box } from '@mui/material';
 import React from 'react';
 import { sendFriendRequest, User } from '../lib/api/user';
 import { useLoginContext } from '../lib/loginContext';

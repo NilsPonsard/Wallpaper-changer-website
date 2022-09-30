@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import Friends from '../components/Friends';
 import PostWallpaper from '../components/PostWallpaper';
+import TokenPanel from '../components/Token';
 
 import { useLoginContext } from '../lib/loginContext';
 import { useTranslation } from '../lib/translations';
@@ -21,6 +22,7 @@ export default function Index() {
       </Head>
       {user ? (
         <Box>
+          <TokenPanel />
           <Typography> username : {user?.username}</Typography>
           <Typography> bio : {user?.description}</Typography>
           <Friends />
