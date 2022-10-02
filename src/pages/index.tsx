@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 import Friends from '../components/Friends';
+import HistoryPanel from '../components/History';
 import PostWallpaper from '../components/PostWallpaper';
 
 import { useLoginContext } from '../lib/loginContext';
@@ -37,7 +38,7 @@ export default function Index() {
             </Box>
             {panel === 0 && <PostWallpaper />}
             {panel === 1 && <Friends />}
-            {panel === 2 && <div>History</div>}
+            {panel === 2 && <HistoryPanel />}
           </Box>
         </Box>
       ) : (
