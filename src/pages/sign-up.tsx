@@ -19,7 +19,6 @@ import { useLoginContext } from '../lib/loginContext';
 import { createUser, UserAlreadyExists } from '../lib/api/user';
 
 import styles from '../styles/pages/SignIn&SignUp.module.css';
-import { login } from '../lib/api/api';
 
 export default function SignIn() {
   const { user, credentialsManager } = useLoginContext();
@@ -187,11 +186,9 @@ export default function SignIn() {
       username: formState.username,
       description: formState.description,
     })
-      .then(() => {
-        // go to home
-        login(formState.email, formState.password, credentialsManager)
-          .then(() => router.push('/'))
-          .catch((e) => console.error(e));
+      .then((creds) => {
+        credentialsManager.setCredentials(creds);
+        router.push('/');
       })
       .catch((reason: Error) => {
         if (reason === UserAlreadyExists) {

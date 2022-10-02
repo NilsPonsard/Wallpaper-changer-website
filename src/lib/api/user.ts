@@ -1,4 +1,5 @@
 import {
+  Credentials,
   CredentialsManager,
   fetchApi,
   fetchApiWithAuth,
@@ -28,8 +29,8 @@ export interface CreateUserRequest {
 
 // Create functions
 
-export async function createUser(request: CreateUserRequest): Promise<User> {
-  const { data, status } = await fetchApi<User>('/user', 'POST', request);
+export async function createUser(request: CreateUserRequest): Promise<Credentials> {
+  const { data, status } = await fetchApi<Credentials>('/user', 'POST', request);
 
   if (status === 201) {
     if (typeof data === 'undefined') throw MissingData;
