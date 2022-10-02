@@ -1,10 +1,9 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Tab, Tabs } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 import Friends from '../components/Friends';
 import PostWallpaper from '../components/PostWallpaper';
-import TokenPanel from '../components/Token';
 
 import { useLoginContext } from '../lib/loginContext';
 import { useTranslation } from '../lib/translations';
@@ -13,6 +12,8 @@ export default function Index() {
   const { user } = useLoginContext();
   const { i18n } = useTranslation();
 
+  const [panel, setPanel] = React.useState(0);
+
   // else show the landing page
 
   return (
@@ -20,13 +21,24 @@ export default function Index() {
       <Head>
         <title>{i18n.t('pages.index.landingTitle')}</title>
       </Head>
+
       {user ? (
         <Box>
-          <TokenPanel />
-          <Typography> username : {user?.username}</Typography>
-          <Typography> bio : {user?.description}</Typography>
-          <Friends />
-          <PostWallpaper />
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={panel}
+                onChange={(e, newValue) => setPanel(newValue)}
+              >
+                <Tab label="Wallpaper" />
+                <Tab label="Friends" />
+                <Tab label="History" />
+              </Tabs>
+            </Box>
+            {panel === 0 && <PostWallpaper />}
+            {panel === 1 && <Friends />}
+            {panel === 2 && <div>History</div>}
+          </Box>
         </Box>
       ) : (
         <Box>

@@ -23,7 +23,8 @@ export default function Friends() {
     <Box>
       <form>
         <TextField
-          label="Add Friend"
+          label="Add Friend..."
+          variant='standard'
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
@@ -49,19 +50,19 @@ export default function Friends() {
           Add
         </Button>
       </form>
-      <Typography>Friends</Typography>
+      <Typography variant="h4">Friends</Typography>
       <Stack spacing={2}>
         {data.friends.map((friend) => (
           <UserCard user={friend} key={friend.id} />
         ))}
       </Stack>
-      <Typography>Friend requests</Typography>
+      <Typography variant="h4">Friend requests</Typography>
       <Stack spacing={2}>
         {data.requests.map((friend) => (
           <UserCard user={friend} key={friend.id} add />
         ))}
       </Stack>
-      <Typography>Friend requests sent</Typography>
+      <Typography variant="h4">Friend requests sent</Typography>
       <Stack spacing={2}>
         {data.sent.map((friend) => (
           <UserCard user={friend} key={friend.id} />

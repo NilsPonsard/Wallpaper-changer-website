@@ -1,4 +1,4 @@
-import { Button, Typography, Box } from '@mui/material';
+import { Button, Typography, Paper } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { sendFriendRequest, User } from '../lib/api/user';
@@ -19,10 +19,10 @@ export default function UserCard({ user, add }: { user: User; add?: boolean }) {
   };
 
   return (
-    <Box>
+    <Paper elevation={3} sx={{ m: 1, p: 1 }}>
       <Typography>{user.username}</Typography>
-      <Typography>{user.description}</Typography>
+      <Typography sx={{color: "text.secondary"}}>{user.description}</Typography>
       {add && <Button onClick={addUser}>Accept</Button>}
-    </Box>
+    </Paper>
   );
 }
