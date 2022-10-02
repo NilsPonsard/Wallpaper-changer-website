@@ -1,16 +1,18 @@
 import React from 'react';
 import { Button, TextField, Typography, Box, Stack } from '@mui/material';
 import useSWR from 'swr';
+import { useSnackbar } from 'notistack';
 import { useLoginContext } from '../lib/loginContext';
 import { getFriends, sendFriendRequest } from '../lib/api/user';
 import UserCard from './UserCard';
 
 export default function Friends() {
   const { credentialsManager } = useLoginContext();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [username, setUsername] = React.useState('');
 
-  const { error, data } = useSWR('/user/friend', async () =>
+  const { error, data, mutate } = useSWR('/user/friend', async () =>
     getFriends(credentialsManager)
   );
 
@@ -30,7 +32,17 @@ export default function Friends() {
         <Button
           onClick={(e) => {
             e.preventDefault();
-            sendFriendRequest(credentialsManager, username);
+            sendFriendRequest(credentialsManager, username)
+              .then(() => {
+                setUsername('');
+                enqueueSnackbar('Friend request sent', { variant: 'success' });
+                mutate();
+              })
+              .catch(() => {
+                enqueueSnackbar('Failed to send friend request', {
+                  variant: 'error',
+                });
+              });
           }}
           type="submit"
         >
