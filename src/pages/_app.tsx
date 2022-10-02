@@ -1,11 +1,10 @@
 import { SnackbarProvider } from 'notistack';
 import React, { useEffect } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import Head from 'next/head';
 import App, { AppContext, AppProps } from 'next/app';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import Link from 'next/link';
 import createEmotionCache from '../lib/emotionCache';
 import { TranslationProvider } from '../lib/translations';
 import { ThemeManagerProvider } from '../lib/themeManager';
@@ -13,6 +12,7 @@ import { LoginContextProvider } from '../lib/loginContext';
 import '../styles/globals.css';
 import styles from '../styles/pages/app.module.css';
 import { setApiServer } from '../lib/api/api';
+import AppBar from '../components/AppBar';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -46,22 +46,18 @@ export default function MyApp(props: MyAppProps) {
       <TranslationProvider>
         <ThemeManagerProvider>
           <LoginContextProvider>
-            <Box
-              className={styles.container}
-              sx={{
-                backgroundColor: 'background.default',
-                color: 'text.primary',
-              }}
-            >
-              <Box className={styles.nav}>
-                <Link href="/" passHref>
-                  <Button variant="contained">Home</Button>
-                </Link>
-              </Box>
-              <SnackbarProvider>
+            <SnackbarProvider>
+              <Box
+                className={styles.container}
+                sx={{
+                  backgroundColor: 'background.default',
+                  color: 'text.primary',
+                }}
+              >
+                <AppBar />
                 <Component {...pageProps} />
-              </SnackbarProvider>
-            </Box>
+              </Box>
+            </SnackbarProvider>
           </LoginContextProvider>
         </ThemeManagerProvider>
       </TranslationProvider>
