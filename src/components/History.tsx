@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography, Stack } from '@mui/material';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 
 import React from 'react';
 import useSWR from 'swr';
@@ -21,15 +21,14 @@ export default function HistoryPanel() {
       <Tabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
         <Tab label="Received" />
         <Tab label="Sent" />
-
-        {data && (
-          <Stack spacing={2}>
-            {(panel === 0 ? data.received : data.sent).map((wallpaper) => (
-              <WallpaperDisplay wallpaper={wallpaper} key={wallpaper.id} />
-            ))}
-          </Stack>
-        )}
       </Tabs>
+      {data && (
+        <Box>
+          {(panel === 0 ? data.received : data.sent).map((wallpaper) => (
+            <WallpaperDisplay wallpaper={wallpaper} key={wallpaper.id} />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }
