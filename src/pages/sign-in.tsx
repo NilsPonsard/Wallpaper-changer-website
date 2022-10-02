@@ -10,6 +10,7 @@ import {
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useTranslation } from '../lib/translations';
 
@@ -28,6 +29,8 @@ interface EditorErrors {
 }
 
 export default function SignIn() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { user, credentialsManager } = useLoginContext();
   const theme = useTheme();
   const { i18n } = useTranslation();
@@ -100,11 +103,13 @@ export default function SignIn() {
         .catch((reason) => {
           // handle error
           if (reason === InvalidCredentialsError) {
-            console.error(
-              <Typography>{i18n.t('signIn.invalidCreditentials')}</Typography>
-            );
+            enqueueSnackbar(i18n.t('signIn.invalidCreditentials'), {
+              variant: 'error',
+            });
           } else {
-            console.error(<Typography>{i18n.t('unexpectedError')}</Typography>);
+            enqueueSnackbar(i18n.t('unexpectedError'), {
+              variant: 'error',
+            });
           }
         })
         .finally(() => {

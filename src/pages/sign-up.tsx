@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Checkbox from '@mui/material/Checkbox';
+import { useSnackbar } from 'notistack';
 import { useTranslation } from '../lib/translations';
 
 import { useLoginContext } from '../lib/loginContext';
@@ -23,6 +24,8 @@ import styles from '../styles/pages/SignIn&SignUp.module.css';
 export default function SignIn() {
   const { user, credentialsManager } = useLoginContext();
   const { i18n } = useTranslation();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   // import Next router
   const router = useRouter();
@@ -169,12 +172,12 @@ export default function SignIn() {
     }
 
     if (error) {
-      console.error(<Typography>{i18n.t('signUp.errorInFields')}</Typography>);
+      enqueueSnackbar(i18n.t('signUp.errorInFields'), { variant: 'error' });
       return;
     }
 
     if (!formState.acceptTos) {
-      console.error(<Typography>{i18n.t('signUp.mustAcceptTOS')}</Typography>);
+      enqueueSnackbar(i18n.t('signUp.mustAcceptTOS'), { variant: 'error' });
       return;
     }
 
@@ -192,11 +195,11 @@ export default function SignIn() {
       })
       .catch((reason: Error) => {
         if (reason === UserAlreadyExists) {
-          console.error(
-            <Typography>{i18n.t('signUp.userAlreadyExists')}</Typography>
-          );
+          enqueueSnackbar(i18n.t('signUp.userAlreadyExists'), {
+            variant: 'error',
+          });
         } else {
-          console.error(<Typography>{i18n.t('unexpectedError')}</Typography>);
+          enqueueSnackbar(i18n.t('unexpectedError'), { variant: 'error' });
         }
       })
       .finally(() => {

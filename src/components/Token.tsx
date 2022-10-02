@@ -11,6 +11,8 @@ export default function TokenPanel() {
   const handleGenerateToken = () => {
     generateClientToken(credentialsManager).then((data) => {
       setToken(data.token);
+    }).catch(() => {
+      setToken('Error receiving token');
     });
   };
 

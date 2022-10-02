@@ -12,11 +12,13 @@ import {
 } from '@mui/material';
 import React from 'react';
 import useSWR from 'swr';
+import { useSnackbar } from 'notistack';
 import { getFriends } from '../lib/api/user';
 import { useLoginContext } from '../lib/loginContext';
 import { postWallpaper } from '../lib/api/wallpaper';
 
 export default function PostWallpaper() {
+  const { enqueueSnackbar } = useSnackbar();
   const { credentialsManager } = useLoginContext();
 
   const [form, setForm] = React.useState<{
@@ -34,7 +36,14 @@ export default function PostWallpaper() {
   );
 
   const handleSubmit = () => {
-    postWallpaper(credentialsManager, form);
+    postWallpaper(credentialsManager, form)
+      .then(() => {
+        enqueueSnackbar('Wallpaper posted', { variant: 'success' });
+      })
+      .catch((e) => {
+        enqueueSnackbar('Failed to post wallpaper', { variant: 'error' });
+        console.error(e);
+      });
   };
 
   return (

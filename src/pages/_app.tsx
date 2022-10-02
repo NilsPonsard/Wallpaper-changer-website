@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack';
 import React, { useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import Head from 'next/head';
@@ -9,7 +10,6 @@ import createEmotionCache from '../lib/emotionCache';
 import { TranslationProvider } from '../lib/translations';
 import { ThemeManagerProvider } from '../lib/themeManager';
 import { LoginContextProvider } from '../lib/loginContext';
-
 import '../styles/globals.css';
 import styles from '../styles/pages/app.module.css';
 import { setApiServer } from '../lib/api/api';
@@ -58,7 +58,9 @@ export default function MyApp(props: MyAppProps) {
                   <Button variant="contained">Home</Button>
                 </Link>
               </Box>
-              <Component {...pageProps} />
+              <SnackbarProvider>
+                <Component {...pageProps} />
+              </SnackbarProvider>
             </Box>
           </LoginContextProvider>
         </ThemeManagerProvider>
